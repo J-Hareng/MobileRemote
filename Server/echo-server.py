@@ -1,26 +1,14 @@
-from aiohttp import web
-import socketio
+from flask import Flask  # Import flask
 
-# creates a new Async Socket IO Server
-sio = socketio.AsyncServer()
-# Creates a new Aiohttp Web Application
-app = web.Application()
-# Binds our Socket.IO server to our Web App
-# instance
-sio.attach(app)
+app = Flask(__name__)  # Setup the flask app by creating an instance of Flask
 
 
-@sio.on('cum')
-async def print_message(sid, message):
-    # When we receive a new event of type
-    # 'message' through a socket.io connection
-    # we print the socket ID and the message
-    print("Socket ID: ", sid)
-    print(message)
+# When someone goes to / on the server, execute the following function
+@app.route('/')
+def home():
+    return 'Hello, World!'  # Return this message back to the browser
 
-# We bind our aiohttp endpoint to our app
-# router
 
-# We kick off our server
+# If the script that was run is this script (we have not been imported)
 if __name__ == '__main__':
-    web.run_app(app)
+    app.run()  # Start the server
