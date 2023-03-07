@@ -19,7 +19,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Button
-        onPress={()=>{api.sendKey("Kevent","ad")}}
+        onPress={()=>{api.sendKey("data","ad")}}
         style={{height: 500,
           width: 30, borderwidth:30}}
         title="Learn More"
