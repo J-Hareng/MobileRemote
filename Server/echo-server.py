@@ -1,22 +1,26 @@
+from aiohttp import web
 import socketio
-from gevent.pywsgi import WSGIServer
 
-# create a Socket.IO server instance
+# creates a new Async Socket IO Server
 sio = socketio.AsyncServer()
+# Creates a new Aiohttp Web Application
+app = web.Application()
+# Binds our Socket.IO server to our Web App
+# instance
+sio.attach(app)
 
-# define a function to be called when data is received
 
+@sio.on('cum')
+async def print_message(sid, message):
+    # When we receive a new event of type
+    # 'message' through a socket.io connection
+    # we print the socket ID and the message
+    print("Socket ID: ", sid)
+    print(message)
 
-@sio.on('data')
-async def handle_data(sid, data):
-    print('Received data:', data)
+# We bind our aiohttp endpoint to our app
+# router
 
-# create a Socket.IO app instance and attach the server to it
-app = socketio.WSGIApp(sio)
-
-# start the server
+# We kick off our server
 if __name__ == '__main__':
-    port = 3001
-    print(f'Starting server on port {port}')
-    http_server = WSGIServer(('', port), app)
-    http_server.serve_forever()
+    web.run_app(app)

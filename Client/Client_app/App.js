@@ -4,16 +4,16 @@ import io from "socket.io-client"
 
 class API{
   constructor(props){
-    this.socket = io("http://192.168.2.117:3001");
+    this.socket = io("http://192.168.21.24:8080");
   }
   sendKey(type, key){
-    this.socket.emit(type, key)
+    this.socket.emit("cum", "cum")
   }
 }
-
+const api = new API();
 export default function App() {
   
-  const api = new API();
+
   
   
   return (
